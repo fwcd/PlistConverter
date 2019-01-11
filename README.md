@@ -1,5 +1,5 @@
 # PlistConverter
-A command line tool that decodes and displays binary/XML [property lists](https://en.wikipedia.org/wiki/Property_list) as JSON.
+A command line tool that can decode, convert and display binary/XML [property lists](https://en.wikipedia.org/wiki/Property_list).
 
 ## Usage
 ```

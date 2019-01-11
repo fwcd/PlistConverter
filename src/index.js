@@ -1,5 +1,5 @@
 const ArgumentParser = require("argparse").ArgumentParser;
-const plist = require("simple-plist");
+const converter = require("./converter");
 
 function main() {
 	const parser = new ArgumentParser({
@@ -7,18 +7,40 @@ function main() {
 		description: "Plist Converter"
 	});
 	parser.addArgument("path", {
-		help: "Path to the .plist file"
+		help: "Path to the input (.plist) file"
+	});
+	parser.addArgument(["-o", "--output"], {
+		help: "Path to the output (.json/.xml) file"
+	});
+	parser.addArgument(["-b", "--binary"], {
+		action: "storeTrue",
+		help: "Encode as a binary plist (instead of using XML)"
 	});
 	
 	const args = parser.parseArgs();
-	const path = args.path;
+	const inputPath = args.path;
+	const outputPath = args.output;
 	
-	plist.readFile(path, function (err, data) {
-		if (err) {
-			throw err;
+	if (outputPath !== null && outputPath !== undefined) {
+		let format;
+		
+		if (outputPath.endsWith(".json")) {
+			format = "JSON";
+			converter.convertPlistToJson(inputPath, outputPath);
+		} else { // Use plist format
+			if (args.binary) {
+				format = "binary";
+				converter.convertPlistToBinary(inputPath, outputPath);
+			} else {
+				format = "XML";
+				converter.convertPlistToXml(inputPath, outputPath);
+			}
 		}
-		console.log(JSON.stringify(data, null, 2))
-	});
+		
+		console.log("Writing plist as " + format + " to " + outputPath);
+	} else {
+		converter.printPlistAsJson(inputPath);
+	}
 }
 
 main();

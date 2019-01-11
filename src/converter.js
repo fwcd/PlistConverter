@@ -19,9 +19,12 @@ module.exports.printPlistAsJson = function (inputPath) {
 	});
 }
 
-module.exports.convertPlistToJson = function (inputPath, outputPath) {
+module.exports.convertPlistToJson = function (inputPath, outputPath, prettyPrint) {
 	readPlist(inputPath, data => {
-		fs.writeFile(outputPath, JSON.stringify(data), WRITE_OPTIONS, handleError);
+		const outputJson = prettyPrint
+			? JSON.stringify(data, null, 2)
+			: JSON.stringify(data)
+		fs.writeFile(outputPath, outputJson, WRITE_OPTIONS, handleError);
 	});
 }
 

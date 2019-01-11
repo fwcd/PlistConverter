@@ -1,0 +1,18 @@
+{
+	"name": "plistconverter",
+	"version": "1.0.0",
+	"description": "A tool for dealing with Property Lists",
+	"main": "src/index.js",
+	"repository": {
+		"url": "https://github.com/fwcd/PlistConverter"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "fwcd",
+	"license": "MIT",
+	"dependencies": {
+		"argparse": "^1.0.10",
+		"simple-plist": "^1.0.0"
+	}
+}
